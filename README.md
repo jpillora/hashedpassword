@@ -7,8 +7,10 @@ A small Go package for hashed passwords
 ``` go
 package main
 
+import "github.com/jpillora/hashedpassword"
+
 type User struct {
-	Password Pwd
+	Password hashedpassword.Pwd
 }
 
 func main() {
@@ -24,8 +26,9 @@ func main() {
 	u.Password.Verify("helloworld") //true
 
 	//string value
-	u.Password //"LCRALThZUJ+C0HI/RRKyHHwCB0+RYUB8:ZskA0uebN7vaTSzA4jsSLJ5t5iYh/7K/OchudH9gvoKgjQU2"
+	u.Password //"MFzYZ8dZkuFV2P8Qzd8xyf9WCgVpPhwV:WsaBuIIxdxKzS3yK3r3OIdiD9pQ1FBmGhw5AO+z96o0xWRSY"
 }
+
 ```
 
 #### MIT License
