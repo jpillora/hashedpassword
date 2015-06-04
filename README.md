@@ -1,6 +1,6 @@
 # hashedpassword
 
-A small Go package for hashed passwords
+A small Go package for hashed password. Provides an alternate API around [`simple-scrypt`](https://github.com/elithrar/simple-scrypt).
 
 ### Usage
 
@@ -26,10 +26,12 @@ func main() {
 	u.Password.Verify("helloworld") //true
 
 	//string value
-	u.Password //"MFzYZ8dZkuFV2P8Qzd8xyf9WCgVpPhwV:WsaBuIIxdxKzS3yK3r3OIdiD9pQ1FBmGhw5AO+z96o0xWRSY"
+	u.Password //"16384$8$1$b553a4306779af101a75c3e0b085e0e9$4c05fcd11c56ba1560f1b6094e38383b15b9a7ab0126718f7d44a68ab3d53207"
 }
 
 ```
+
+*Note* This packages API is suited for use with Go structs. For standalone strings, see [`simple-scrypt`](https://github.com/elithrar/simple-scrypt) or [`bcrypt`](https://godoc.org/golang.org/x/crypto/bcrypt).
 
 #### MIT License
 

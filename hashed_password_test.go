@@ -1,9 +1,6 @@
 package hashedpassword
 
-import (
-	"log"
-	"testing"
-)
+import "testing"
 
 type User struct {
 	Password Pwd
@@ -22,13 +19,24 @@ func TestUserPasswordHash(t *testing.T) {
 	if !u.Password.Verify("helloworld") {
 		t.Error("should pass")
 	}
-
-	log.Println(u.Password)
-
 	//manual change
 	u.Password = "1234"
 
 	if u.Password.Verify("1234") {
 		t.Error("should fail after manual change")
+	}
+}
+
+func TestSetSize(t *testing.T) {
+	u1 := User{}
+	u1.Password.Set("pass")
+
+	SetParams(Params{N: 16384, R: 12, P: 2, SaltLen: 8, DKLen: 16})
+
+	u2 := User{}
+	u2.Password.Set("pass")
+
+	if len(u1.Password) == len(u2.Password) {
+		t.Error("should be different lengths")
 	}
 }

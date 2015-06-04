@@ -1,57 +1,43 @@
 package hashedpassword
 
-import (
-	"crypto/rand"
-	"crypto/sha1"
-	"encoding/base64"
+import "github.com/elithrar/simple-scrypt"
 
-	"golang.org/x/crypto/pbkdf2"
-)
+type Params scrypt.Params
 
-var HashIterations = 2048
+var defaultParams = Params(scrypt.DefaultParams)
 
-var (
-	keySize    = 36
-	saltSize   = 24
-	keyStrlen  = 4 * (keySize / 3)
-	saltStrlen = 4 * (saltSize / 3)
-)
-
-func SetSizes(key, salt int) {
-	//sizes MUST be length%12==0
-	//since base64 bytes to raw bytes is 4*n/3
-	if key%12 != 0 || salt%12 != 0 {
-		panic("Invalid key or salt size")
+//Set the
+func SetParams(params Params) {
+	if params.DKLen < scrypt.MinDKLen {
+		panic("Invalid dk length")
 	}
-	keySize = key
-	saltSize = salt
-	keyStrlen = 4 * (keySize / 3)
-	saltStrlen = 4 * (saltSize / 3)
+	if params.SaltLen < scrypt.MinSaltLen {
+		panic("Invalid salt length")
+	}
+	defaultParams = params
 }
 
 type Pwd string
 
-func (h *Pwd) Set(pass string) error {
-	b := make([]byte, saltSize)
-	_, err := rand.Read(b)
-	if err != nil {
-		//oh noez, os has run out of randomz
+func (h *Pwd) SetWithParams(password string, params Params) error {
+	if hashed, err := scrypt.GenerateFromPassword([]byte(password), scrypt.Params(params)); err != nil {
 		return err
+	} else {
+		*h = Pwd(hashed)
 	}
-	salt := base64.StdEncoding.EncodeToString(b)
-	*h = Pwd(salt + ":" + key(pass, salt))
 	return nil
 }
 
-func (h *Pwd) Verify(pass string) bool {
-	str := string(*h)
-	if len(str) != saltStrlen+1+keyStrlen {
-		return false
-	}
-	salt := str[:saltStrlen]
-	return str[saltStrlen+1:] == key(pass, salt)
+func (h *Pwd) Set(password string) error {
+	return h.SetWithParams(password, defaultParams)
 }
 
-func key(pass, salt string) string {
-	return base64.StdEncoding.EncodeToString(pbkdf2.Key([]byte(pass), []byte(salt), HashIterations, keySize, sha1.New))
+//Verify compares the password with the attempt and returns a bool
+func (h *Pwd) Verify(attempt string) bool {
+	return h.Check(attempt) == nil
+}
+
+//Verify compares the password with the attempt and returns an error
+func (h *Pwd) Check(attempt string) error {
+	return scrypt.CompareHashAndPassword([]byte(*h), []byte(attempt))
 }

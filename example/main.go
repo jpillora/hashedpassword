@@ -15,9 +15,10 @@ func main() {
 
 	//generates rand salt then hashes
 	u.Password.Set("helloworld")
+
 	u.Password.Verify("worldhello") //false
 	u.Password.Verify("helloworld") //true
 
 	//string value
-	u.Password //"MFzYZ8dZkuFV2P8Qzd8xyf9WCgVpPhwV:WsaBuIIxdxKzS3yK3r3OIdiD9pQ1FBmGhw5AO+z96o0xWRSY"
+	println(u.Password)
 }
