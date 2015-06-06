@@ -1,6 +1,8 @@
 # hashedpassword
 
-A small Go package for hashed password. Provides an alternate API around [`simple-scrypt`](https://github.com/elithrar/simple-scrypt).
+A small Go package for hashed passwords. Provides an alternate API around [`simple-scrypt`](https://github.com/elithrar/simple-scrypt).
+
+[![GoDoc](https://godoc.org/github.com/jpillora/hashedpassword?status.svg)](https://godoc.org/github.com/jpillora/hashedpassword)
 
 ### Usage
 
@@ -10,7 +12,7 @@ package main
 import "github.com/jpillora/hashedpassword"
 
 type User struct {
-	Password hashedpassword.Pwd
+	Password hashedpassword.Pwd //custom string type
 }
 
 func main() {
@@ -31,7 +33,7 @@ func main() {
 
 ```
 
-*Note* This packages API is suited for use with Go structs. For standalone strings, see [`simple-scrypt`](https://github.com/elithrar/simple-scrypt) or [`bcrypt`](https://godoc.org/golang.org/x/crypto/bcrypt).
+*Note* This package's API is suited for use with Go structs. For standalone strings, see [`simple-scrypt`](https://github.com/elithrar/simple-scrypt) or [`bcrypt`](https://godoc.org/golang.org/x/crypto/bcrypt).
 
 #### MIT License
 
