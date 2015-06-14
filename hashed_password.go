@@ -17,6 +17,12 @@ func SetParams(params Params) {
 	defaultParams = params
 }
 
+func New(initial string) Pwd {
+	p := Pwd("")
+	p.Set(initial)
+	return p
+}
+
 type Pwd string
 
 func (h *Pwd) SetWithParams(password string, params Params) error {
