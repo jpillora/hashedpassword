@@ -8,12 +8,6 @@ var defaultParams = Params(scrypt.DefaultParams)
 
 //Set the
 func SetParams(params Params) {
-	if params.DKLen < scrypt.MinDKLen {
-		panic("Invalid dk length")
-	}
-	if params.SaltLen < scrypt.MinSaltLen {
-		panic("Invalid salt length")
-	}
 	defaultParams = params
 }
 
