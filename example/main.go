@@ -14,7 +14,9 @@ func main() {
 	u.Password.Verify("1234") //false
 
 	//generates rand salt then hashes
-	u.Password.Set("helloworld")
+	if err := u.Password.Set("helloworld"); err != nil {
+		panic(err)
+	}
 
 	u.Password.Verify("worldhello") //false
 	u.Password.Verify("helloworld") //true

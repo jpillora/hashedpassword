@@ -1,0 +1,4 @@
+github.com/elithrar/simple-scrypt v1.4.1 h1:LtAlU7NDhCJN2eUam1yOr9O1XTHb8T+pnDHh/wwlSt0=
+github.com/elithrar/simple-scrypt v1.4.1/go.mod h1:z2XuSRl9BwLdpRdh8Hs1vu5ehoOw8lPbcZW9ViGjXNs=
+golang.org/x/crypto v0.57.0 h1:3ZVCjf8Ggz7zneR/EHRVx68Ctf+2pmIMP2UFhh9cC6M=
+golang.org/x/crypto v0.57.0/go.mod h1:Fdz0i5U6CoizGwLda9DttjSk6qlZo25zYNtR+ycvuZA=
